@@ -16,6 +16,8 @@
       - telnet
       - tmux
       - vim
+      - xfce4-screenshooter
+      - imagemagick
   tags:
     - apt
 
