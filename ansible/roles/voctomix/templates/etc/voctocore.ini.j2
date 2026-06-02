@@ -12,15 +12,22 @@ livesources={{ (ingest_sources | last).name }}
 {% for source in ingest_sources %}
 
 [source.{{ source.name }}]
-kind={{ source.kind }}
-video_source={{ source.video_source }}
-audio_source={{ source.audio_source }}
-audio.original=0+1
+{% for key, value in source.items() %}
+{{ key }}={{ value }}
+{% endfor %}
+
 {% endfor %}
 
 
 [blinder]
-enabled=false
+enabled=true
+
+[source.blinder]
+kind=gst
+# video_source=videotestsrc pattern=ball motion=hsweep animation-mode=wall-time flip=true is-live=true
+video_source=videotestsrc pattern=blue ! clockoverlay text="Voctomix Blinder" halignment=left line-alignment=left
+audio.blinder=0+1
+
 
 [programoutput]
 enabled = true
