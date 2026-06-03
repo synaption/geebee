@@ -1,17 +1,13 @@
 ---
-# Ansible connects to the container via 'docker exec' — no SSH needed.
-# The container must be running before provisioning (see docker-provision.sh).
 ansible_connection: docker
-ansible_host: geebee  # must match container_name in docker-compose.yml
+ansible_host: geebee
 
 room_name: docker
 skip_unit_test: true
 
-# Use software-only audio/video so no real capture hardware is required
 audio_device: "hw:Dummy"
 video_sink: "fakevideosink"
 
-# Suppress pre-exec GStreamer tests that require a running X display
 ExecStartPres: []
 
 voctomix:
@@ -24,7 +20,6 @@ voctomix:
   auto_copy_recordings: false
   autostart_gui: false
 
-# Virtual sources only — no v4l2/libcamera hardware required
 ingest_sources:
   - description: "sweep and beep"
     name: cam

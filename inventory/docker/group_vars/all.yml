@@ -1,0 +1,17 @@
+---
+ansible_python_interpreter: /usr/bin/python3
+ansible_user: root
+ansible_remote_tmp: /tmp/.ansible/tmp
+
+user_name: videoteam
+
+debian_source: http://deb.debian.org/debian/
+debian_version: trixie
+debian_components: main non-free non-free-firmware
+enable_backports: true
+
+apt_proxy: false
+in_vagrant: false
+
+# Keep SSH key import disabled for CI/docker runs.
+ssh_imports: []

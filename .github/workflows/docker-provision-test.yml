@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   docker-provision:
     runs-on: ubuntu-latest
@@ -27,6 +30,11 @@ jobs:
 
       - name: Verify compose file
         run: docker compose config
+
+      - name: Check script and Ansible syntax
+        run: |
+          bash -n docker-provision.sh
+          ansible-playbook ansible/docker.yml --inventory inventory/docker/hosts --limit gbdocker --syntax-check
 
       - name: Run Docker provisioning
         run: ./docker-provision.sh
