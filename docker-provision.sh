@@ -40,7 +40,7 @@ done
 
 echo "==> Running Ansible provisioning (limit: gbdocker)..."
 ansible-playbook \
-    ansible/site.yml \
+    ansible/docker.yml \
     --inventory inventory/hosts \
     --limit gbdocker \
     "$@"
