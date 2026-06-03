@@ -23,6 +23,11 @@
   roles:
   - blackmagic
 
+- hosts: docker
+  roles:
+  - helpers
+  - voctomix
+
 - hosts: test
   roles:
   - apt
