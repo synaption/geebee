@@ -1,0 +1,36 @@
+---
+ansible_connection: docker
+ansible_host: geebee
+
+room_name: docker
+skip_unit_test: true
+
+audio_device: "hw:Dummy"
+video_sink: "fakevideosink"
+
+ExecStartPres: []
+
+voctomix:
+  version: "main"
+  display_system: gl
+  framerate: 25
+  audio_channels: 2
+  previews: false
+  mirrors: false
+  auto_copy_recordings: false
+  autostart_gui: false
+
+ingest_sources:
+  - description: "sweep and beep"
+    name: cam
+    kind: gst
+    video_source: "videotestsrc pattern=ball motion=hsweep animation-mode=wall-time flip=true is-live=true"
+    audio_source: "audiotestsrc wave=ticks freq=330"
+    audio.beep: 0+1
+
+  - description: "color bars and tone"
+    name: slides
+    kind: gst
+    video_source: "videotestsrc pattern=smpte is-live=true"
+    audio_source: "audiotestsrc wave=sine is-live=true"
+    audio.tone: 0+1

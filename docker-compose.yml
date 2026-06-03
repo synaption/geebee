@@ -1,0 +1,12 @@
+services:
+  geebee:
+    build: .
+    container_name: geebee
+    # privileged is required for systemd to manage cgroups and services
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    tmpfs:
+      - /run
+      - /run/lock
+    stop_signal: SIGRTMIN+3
