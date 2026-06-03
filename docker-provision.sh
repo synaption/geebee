@@ -25,10 +25,14 @@ cd "$SCRIPT_DIR"
 echo "==> Building and starting geebee container..."
 docker compose up -d --build
 
-echo "==> Waiting for systemd to initialise..."
-# Give systemd a moment to reach the multi-user target before ansible connects
+echo "==> Waiting for systemd to initialize..."
+# Wait until systemd reaches 'running' or 'degraded'.  Degraded is expected
+# because several units are masked (e.g. systemd-udevd) and some hardware
+# services will not start inside a container.
 for i in $(seq 1 12); do
-    if docker exec geebee systemctl is-system-running --quiet 2>/dev/null; then
+    state=$(docker exec geebee systemctl is-system-running 2>/dev/null || true)
+    if [ "$state" = "running" ] || [ "$state" = "degraded" ]; then
+        echo "    systemd is ${state}"
         break
     fi
     sleep 5
